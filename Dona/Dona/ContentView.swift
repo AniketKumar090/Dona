@@ -16,63 +16,18 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             
-            LinearGradient(gradient: Gradient(colors: [Color(red: 0.95, green: 0.95, blue: 0.96)]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color(red: 0.09, green: 0.08, blue: 0.11)]), startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
             
             VStack(alignment: .leading) {
-                Text("A-nod")
-                    .font(.largeTitle)
+                Text("Dona")
+                    .foregroundStyle(.white)
+                    .font(.system(size: 21, weight: .semibold))
                     .padding(.leading)
-                
-                HStack(spacing: 0) {
-                    CheckBoxView()
-                        .frame(width: isTextFieldFocused ? 13 : 0, height: 13)
-                        .padding(.leading, 12)
-                    
-                    
-                    TextField("Write a new task", text: $task)
-                        .textFieldStyle(WhiteBorder())
-                        .font(.system(size: 13))
-                        .background(.clear)
-                        .focused($isTextFieldFocused)
-                        
-                    Group  {
-                        Button(action: starItem) {
-                            Image(systemName: isStar ? "star.fill" : "star")
-                                .font(.system(size: 15))
-                                .padding(.horizontal, 12)
-                                .foregroundColor(Color(red: 0.93, green: 0.78, blue: 0.42))
-                        }.disabled(!isTextFieldFocused)
-                            .opacity(isTextFieldFocused ? 1.0 : 0)
-                        Button(action: addItem) {
-                            Image(systemName: "plus")
-                                .font(.system(size: 17, weight: .medium))
-                                .foregroundColor(.white)
-                                .frame(width: 48, height: 38)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 0)
-                                        .foregroundStyle(Color(red: 0.85, green: 0.85, blue: 0.85))
-                                        .cornerRadius(10, corners: [.topRight,.bottomRight])
-                                        .cornerRadius(2, corners: [.topLeft,.bottomLeft])
-                                    
-                                )
-                                .padding(.trailing, 2)
-                        }.disabled(!isTextFieldFocused)
-                            .opacity(isTextFieldFocused ? 1.0 : 0)
-                    }
-                }
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(isTextFieldFocused ? Color.white : Color.pillGray)
-                )
-                .padding(.horizontal, 10)
-                .padding(.bottom, 10)
-                .animation(.smooth, value: isTextFieldFocused)
-                
                 List {
                     ForEach(sortedItems, id: \.id) { item in
                         
-                            HStack {
+                        HStack(alignment: .top) {
                                 
                                 Button(action: {
                                     withAnimation(.bouncy) {
@@ -81,25 +36,21 @@ struct ContentView: View {
                                 }) {
                                     if !item.isCompleted{
                                         CheckBoxView()
-                                            .frame(width: 13, height: 13)
+                                            .opacity(0.5)
+                                            .frame(width: 14, height: 14)
                                             .padding(.leading, 10)
-                                    }else{
-                                        Image(systemName: "checkmark")
-                                            .resizable()
-                                            .frame(width: 13,height: 13)
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 5)
-                                                    .foregroundStyle(.black)
-                                            )
-                                            .foregroundStyle(.white)
-                                            .padding(.leading,10)
+                                    } else {
+                                        CheckBoxFilledView()
+                                            .opacity(0.5)
+                                            .frame(width: 14, height: 14)
+                                            .padding(.leading, 10)
                                     }
                                     
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .padding(.leading,2)
                                 Text(item.title)
-                                    .foregroundStyle(Color.textBlack)
+                                    .foregroundStyle(Color.white)
                                     .strikethrough(item.isCompleted)
                                     .font(.system(size: 13))
                                     .onTapGesture {
@@ -115,14 +66,7 @@ struct ContentView: View {
                                         .padding(.trailing,10)
                                 }
                             }
-                            .frame(height: 40)
-                            
                             .listRowInsets(EdgeInsets())
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .foregroundStyle(Color.white)
-                            )
-                            .padding(.horizontal, 10)
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button(role: .destructive) {
                                     withAnimation(.linear(duration: 0.2)) {
@@ -140,11 +84,79 @@ struct ContentView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 }
+                .contentMargins(.top, 1, for: .scrollContent)
                 .animation(.smooth, value: sortedItems)
                 .listStyle(PlainListStyle())
-                .listRowSpacing(10)
+                .listRowSpacing(0)
+                .scrollIndicators(.hidden)
             }
             
+            ZStack {
+                Rectangle()
+                    .foregroundStyle(.black.opacity(0.5))
+                Rectangle()
+                    .foregroundStyle(.ultraThinMaterial.opacity(0.5))
+            }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
+                .opacity(isTextFieldFocused ? 1.0 : 0)
+                .animation(.smooth, value: isTextFieldFocused)
+                .onTapGesture {
+                    task = ""
+                    isTextFieldFocused = false
+                }
+            
+            VStack {
+                Spacer()
+                HStack(spacing: 0) {
+                    CheckBoxStrokeView()
+                        .frame(width: 13, height: 13)
+                        .scaleEffect(isTextFieldFocused ?  1.0 : 0)
+                        .padding(.leading, isTextFieldFocused ?  12 : 0)
+                    TextField("Add a new task", text: $task)
+                        .textFieldStyle(WhiteBorder(isActive: isTextFieldFocused))
+                        .foregroundColor(.white)
+                        .font(.system(size: 13))
+                        .background(.clear)
+                        .focused($isTextFieldFocused)
+                        
+                    Group  {
+                        Button(action: starItem) {
+                            Image(systemName: isStar ? "star.fill" : "star.slash.fill")
+                                .symbolRenderingMode(.hierarchical)
+                                .font(.system(size: 15))
+                                .padding(.horizontal, 12)
+                                .foregroundColor(Color(red: 0.93, green: 0.78, blue: 0.42))
+                        }.disabled(!isTextFieldFocused)
+                            .opacity(isTextFieldFocused ? 1.0 : 0)
+                        Button(action: addItem) {
+                            Image(systemName: "plus")
+                                .font(.system(size: 15))
+                                .foregroundColor(.white.opacity(0.8))
+                                .frame(width: 40-6, height: 40-6)
+                                .background(
+                                    Circle()
+                                        .foregroundStyle(.linearGradient(colors: [Color(red: 0.45, green: 0.29, blue: 0.74), Color(red: 0.57, green: 0.3, blue: 0.75)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                )
+                                .padding(.trailing, 4)
+                        }.disabled(!isTextFieldFocused)
+                        .scaleEffect(isTextFieldFocused ? 1.0 : 0)
+                    }
+                }
+                .background(
+                    Capsule()
+                        .foregroundStyle(isTextFieldFocused ? .tertiary : .secondary)
+                        .background(
+                            Capsule()
+                                .stroke(.white.opacity(0.4), lineWidth: 0.2)
+                        )
+                )
+                .padding(.horizontal, 10)
+                .padding(.vertical, 10)
+                .background(.ultraThinMaterial)
+                .preferredColorScheme(.dark)
+                .animation(.bouncy, value: isTextFieldFocused)
+            }
             
         }
        
@@ -189,6 +201,7 @@ struct ContentView: View {
 }
 
 struct WhiteBorder: TextFieldStyle {
+    var isActive: Bool
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(.horizontal, 8)
@@ -196,17 +209,42 @@ struct WhiteBorder: TextFieldStyle {
     }
 }
 
+struct CheckBoxStrokeView: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .stroke(Color.checkBoxGray, lineWidth: 0.65)
+        }
+    }
+}
+
 struct CheckBoxView: View {
     var body: some View {
-        RoundedRectangle(cornerRadius: 4)
-            .foregroundColor(Color.checkBoxGray)
+        ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .foregroundStyle(Color(red: 0.09, green: 0.08, blue: 0.11))
+            RoundedRectangle(cornerRadius: 4)
+                .stroke(Color.checkBoxGray, lineWidth: 0.65)
+        }
+    }
+}
+
+struct CheckBoxFilledView: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .foregroundStyle(Color.checkBoxGray)
+            RoundedRectangle(cornerRadius: 4)
+                .stroke(Color.checkBoxGray, lineWidth: 0.65)
+        }
     }
 }
 
 extension Color {
-    static let checkBoxGray = Color(red: 0.9, green: 0.9, blue: 0.9)
-    static let pillGray = Color(red: 0.87, green: 0.88, blue: 0.9)
-    static let textBlack = Color(red: 0.15, green: 0.15, blue: 0.15)
+    static let checkBoxGray = Color(red: 0.59, green: 0.59, blue: 0.59)
+    static let pillGray = Color(red: 0.12, green: 0.12, blue: 0.14)
+    static let textGrayLight = Color(red: 0.65, green: 0.65, blue: 0.61)
+    static let textGrayDark = Color(red: 0.32, green: 0.31, blue: 0.34)
 }
 
 struct RoundedCorner: Shape {
