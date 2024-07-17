@@ -10,8 +10,8 @@
 		880113102C484B52000FF44C /* DonaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8801130F2C484B52000FF44C /* DonaApp.swift */; };
 		880113162C484B54000FF44C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 880113152C484B54000FF44C /* Assets.xcassets */; };
 		880113192C484B54000FF44C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 880113182C484B54000FF44C /* Preview Assets.xcassets */; };
-		880113202C484BF1000FF44C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8801131F2C484BF1000FF44C /* ContentView.swift */; };
-		880113222C484BFF000FF44C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880113212C484BFF000FF44C /* Item.swift */; };
+		880D560F2C484E6600757F86 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880D560E2C484E6600757F86 /* ContentView.swift */; };
+		880D56112C484E9A00757F86 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880D56102C484E9A00757F86 /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,8 +19,8 @@
 		8801130F2C484B52000FF44C /* DonaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonaApp.swift; sourceTree = "<group>"; };
 		880113152C484B54000FF44C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		880113182C484B54000FF44C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		8801131F2C484BF1000FF44C /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = "../../../../../Desktop/A-nod/A-nod/ContentView.swift"; sourceTree = "<group>"; };
-		880113212C484BFF000FF44C /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = "../../../../../Desktop/A-nod/A-nod/Item.swift"; sourceTree = "<group>"; };
+		880D560E2C484E6600757F86 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		880D56102C484E9A00757F86 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +54,8 @@
 			isa = PBXGroup;
 			children = (
 				8801130F2C484B52000FF44C /* DonaApp.swift */,
-				8801131F2C484BF1000FF44C /* ContentView.swift */,
-				880113212C484BFF000FF44C /* Item.swift */,
+				880D560E2C484E6600757F86 /* ContentView.swift */,
+				880D56102C484E9A00757F86 /* Item.swift */,
 				880113152C484B54000FF44C /* Assets.xcassets */,
 				880113172C484B54000FF44C /* Preview Content */,
 			);
@@ -140,9 +140,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				880D560F2C484E6600757F86 /* ContentView.swift in Sources */,
+				880D56112C484E9A00757F86 /* Item.swift in Sources */,
 				880113102C484B52000FF44C /* DonaApp.swift in Sources */,
-				880113222C484BFF000FF44C /* Item.swift in Sources */,
-				880113202C484BF1000FF44C /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
