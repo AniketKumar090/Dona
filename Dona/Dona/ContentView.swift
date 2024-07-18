@@ -24,6 +24,7 @@ struct ContentView: View {
                     .foregroundStyle(.white)
                     .font(.system(size: 21, weight: .semibold))
                     .padding(.leading)
+                
                 List {
                     ForEach(sortedItems, id: \.id) { item in
                         
@@ -49,15 +50,18 @@ struct ContentView: View {
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .padding(.leading,2)
+                           
                                 Text(item.title)
                                     .foregroundStyle(Color.white)
                                     .strikethrough(item.isCompleted)
                                     .font(.system(size: 13))
                                     .onTapGesture {
                                         task = item.title
-                                        selectedItem = item
+                                        isStar = item.isStarred
                                         isTextFieldFocused = true
+                                        selectedItem = item
                                     }
+                            
                                 Spacer()
                                 
                                 if item.isStarred {
@@ -113,6 +117,7 @@ struct ContentView: View {
                         .frame(width: 13, height: 13)
                         .scaleEffect(isTextFieldFocused ?  1.0 : 0)
                         .padding(.leading, isTextFieldFocused ?  12 : 0)
+                    
                     TextField("Add a new task", text: $task)
                         .textFieldStyle(WhiteBorder(isActive: isTextFieldFocused))
                         .foregroundColor(.white)
@@ -171,10 +176,13 @@ struct ContentView: View {
 
     private func addItem() {
         if let selectedItem = selectedItem {
-            selectedItem.title = task
-            selectedItem.isStarred = isStar
-            try? modelContext.save()
-        } else {
+            if task != ""{
+                selectedItem.title = task
+                selectedItem.isStarred = isStar
+                try? modelContext.save()
+            }
+        }
+        else{
             let newItem = Item(title: task, isStarred: isStar)
             if !newItem.title.isEmpty {
                 modelContext.insert(newItem)
@@ -191,7 +199,7 @@ struct ContentView: View {
         task = ""
         isStar = false
         isTextFieldFocused = false
-        selectedItem = nil
+        selectedItem  = nil
     }
 }
 
