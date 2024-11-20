@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
@@ -32,6 +33,7 @@ struct ContentView: View {
                                 
                                 Button(action: {
                                     withAnimation(.bouncy) {
+                                        haptic()
                                         item.isCompleted.toggle()
                                     }
                                 }) {
@@ -56,6 +58,7 @@ struct ContentView: View {
                                     .strikethrough(item.isCompleted)
                                     .font(.system(size: 13))
                                     .onTapGesture {
+                                        haptic()
                                         task = item.title
                                         isStar = item.isStarred
                                         isTextFieldFocused = true
@@ -75,6 +78,7 @@ struct ContentView: View {
                                 Button(role: .destructive) {
                                     withAnimation(.linear(duration: 0.2)) {
                                         deleteItem(item: item)
+                                        
                                     }
                                     let generator = UINotificationFeedbackGenerator()
                                     generator.notificationOccurred(.warning)
@@ -124,7 +128,10 @@ struct ContentView: View {
                         .font(.system(size: 13))
                         .background(.clear)
                         .focused($isTextFieldFocused)
-                        
+                        .onTapGesture {
+                            haptic()
+                        }
+             
                     Group  {
                         Button(action: starItem) {
                             Image(systemName: isStar ? "star.fill" : "star.slash.fill")
@@ -180,14 +187,15 @@ struct ContentView: View {
                 selectedItem.title = task
                 selectedItem.isStarred = isStar
                 try? modelContext.save()
-            }
+}
         }
         else{
             let newItem = Item(title: task, isStarred: isStar)
             if !newItem.title.isEmpty {
                 modelContext.insert(newItem)
-            }
+                  }
         }
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         resetInputFields()
     }
 
@@ -269,4 +277,7 @@ extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
     }
+}
+func haptic(){
+    UIImpactFeedbackGenerator(style: .light).impactOccurred()
 }
