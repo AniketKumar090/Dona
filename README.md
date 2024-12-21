@@ -27,11 +27,14 @@ An intuitive task management iOS application with priority flagging system and l
 
 1. Clone the repository
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/AniketKumar090/Dona.git
+cd Dona
 ```
 
 2. Open the .xcodeproj file in Xcode
-
+```bash
+open Dona.xcodeproj
+```
 3. Build and run the project on your iOS device or simulator
 
 ## Usage
